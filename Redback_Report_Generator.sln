@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redback_Report_Generator", "Redback_Report_Generator\Redback_Report_Generator.csproj", "{EE1CA2C0-858A-4D80-8AA5-74E1D8AD7711}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Redback_PDF_Generator_Setup", "Redback_PDF_Generator_Setup\Redback_PDF_Generator_Setup.vdproj", "{0647EF8C-64C7-4A1A-BD9B-BDAA2132545F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE1CA2C0-858A-4D80-8AA5-74E1D8AD7711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1CA2C0-858A-4D80-8AA5-74E1D8AD7711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1CA2C0-858A-4D80-8AA5-74E1D8AD7711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1CA2C0-858A-4D80-8AA5-74E1D8AD7711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0647EF8C-64C7-4A1A-BD9B-BDAA2132545F}.Debug|Any CPU.ActiveCfg = Debug
+		{0647EF8C-64C7-4A1A-BD9B-BDAA2132545F}.Release|Any CPU.ActiveCfg = Release
+		{0647EF8C-64C7-4A1A-BD9B-BDAA2132545F}.Release|Any CPU.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
