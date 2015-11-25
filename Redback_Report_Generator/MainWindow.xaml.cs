@@ -132,6 +132,9 @@ namespace Redback_Report_Generator
                             userParameter.Percentage = Convert.ToDouble(currentCell.Text) * 0.01;
                             if (userParameter.Percentage < 0.0f)
                                 userParameter.Percentage = 0.0f;
+                            else if (userParameter.Percentage > 1.0f)
+                                userParameter.Percentage = 1.0f;
+
                             break;
                         case 2:
                             userParameter.Color = currentCell.Text;
@@ -191,6 +194,7 @@ namespace Redback_Report_Generator
 
                     ROM_Page rom_Page = new ROM_Page(rom_pdf, userProfile, userParameters);
                     rom_Page.DrawHeader(gfx1);
+                    rom_Page.DrawGraph(gfx1);
                     
                     break;
 
@@ -212,7 +216,7 @@ namespace Redback_Report_Generator
                 Directory.CreateDirectory(rbDirectory);
 
             // Save the document...
-            string filename = rbDirectory + userProfile.Name + " OHS-Report.pdf";
+            string filename = rbDirectory + userProfile.Name + " Redback Report.pdf";
             document.Save(filename);
             txt_FilePath.Text = "File location :" + filename;
             // ...and start a viewer.

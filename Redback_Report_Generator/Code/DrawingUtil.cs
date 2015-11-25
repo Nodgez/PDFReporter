@@ -33,7 +33,7 @@ namespace Redback_Report_Generator
             //calculte all of the point in the polygon
             for (int i = 0; i < sides; i++)
             {
-                float angle = (float)Math.Floor(i * degreeSegments + angleOffset);
+                float angle = i * degreeSegments + angleOffset;
                 angle *= ((float)Math.PI / 180);
                 XPoint location = new XPoint(size * Math.Cos(angle) + center.X,
                     size * Math.Sin(angle) + center.Y);

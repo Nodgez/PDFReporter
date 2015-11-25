@@ -16,15 +16,21 @@ namespace Redback_Report_Generator
         protected Dictionary<string, Parameter> userParameters_ = new Dictionary<string, Parameter>();
         protected XUnit quarterWidth_;
 
+        protected XSolidBrush backgroundBrush;
+        protected XSize cornerRadius;
+
         public Report_Page(PdfPage page, ProfileInfo userProfile, List<Parameter> userParameters)
         {
             this.page_ = page;
             this.userProfile_ = userProfile;
 
             foreach (Parameter p in userParameters)
-                this.userParameters_.Add(p.Name, p);
+                this.userParameters_.Add(p.Name.TrimEnd(), p);
 
             quarterWidth_ = page_.Width / 4;
+            cornerRadius = new XSize(40, 40);
+            backgroundBrush = new XSolidBrush(XColor.FromKnownColor(XKnownColor.Gray));
+
         }
 
         public virtual void DrawHeader(XGraphics gfx)

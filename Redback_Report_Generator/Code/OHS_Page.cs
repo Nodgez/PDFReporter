@@ -12,10 +12,10 @@ namespace Redback_Report_Generator
     class OHS_Page : Report_Page
     {
 
+
         public OHS_Page(PdfPage page, ProfileInfo userProfile, List<Parameter> userParameters) :
             base(page, userProfile, userParameters)
         {
-            
         }
 
         public override void DrawHeader(XGraphics gfx)
@@ -28,9 +28,9 @@ namespace Redback_Report_Generator
         {
             //set up the background grey
             XRect backgroundRect = new XRect(20, page_.Height * 0.11, page_.Width - 40, page_.Height * 0.425);
-            gfx.DrawRoundedRectangle(new XSolidBrush(XColor.FromKnownColor(XKnownColor.Gray)),
+            gfx.DrawRoundedRectangle(backgroundBrush,
                 backgroundRect,
-                new XSize(40, 40));
+                cornerRadius);
             XPoint center = new XPoint(page_.Width * 0.5, backgroundRect.Y + backgroundRect.Height * 0.6);
 
             XPoint[] polyPoints = DrawingUtil.Instance.GeneratePoints(center, 130, 5, gfx);
@@ -63,28 +63,22 @@ namespace Redback_Report_Generator
             DrawPentaInfoBox(gfx, polyPoints[4] + new XPoint(-100,-35), leftKneeImg, userParameters_["LEFT Knee Stability"]);
 
             //percentage Lines
-            gfx.DrawString(0 + "%", new XFont("Arial", 10), XBrushes.Black, center + new XPoint(5,0));
-            for (int i = 10; i > 0; i--)
+            gfx.DrawString(0 + "%", new XFont("Arial", 10), XBrushes.Black, center + new XPoint(5, 0));
+            for (int j = 0; j < polyPoints.Length - 1; j++)
             {
-                float increment = -i * 0.1f;
+                XPoint pt1 = polyPoints[j];
+                XPoint pt2 = polyPoints[j + 1];
 
-                gfx.DrawString((i * 10).ToString() + '%', new XFont("Arial", 8), XBrushes.Black, DrawingUtil.Instance.Interpolate(center, polyPoints[0], increment) + new XPoint(5,0));
+                for (int i = 10; i > 0; i--)
+                {
+                    float increment = -i * 0.1f;
+                    if (j < 1)
+                        gfx.DrawString((i * 10).ToString() + '%', new XFont("Arial", 8), XBrushes.Black, DrawingUtil.Instance.Interpolate(center, polyPoints[0], increment) + new XPoint(5, 0));
 
-                gfx.DrawLine(perimeterPen,
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[4], increment),
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[0], increment));
-                gfx.DrawLine(perimeterPen,
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[0], increment),
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[1], increment));
-                gfx.DrawLine(perimeterPen,
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[1], increment),
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[2], increment));
-                gfx.DrawLine(perimeterPen,
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[2], increment),
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[3], increment));
-                gfx.DrawLine(perimeterPen,
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[3], increment),
-                    DrawingUtil.Instance.Interpolate(center, polyPoints[4], increment));
+                    gfx.DrawLine(perimeterPen,
+                        DrawingUtil.Instance.Interpolate(center, pt1, increment),
+                        DrawingUtil.Instance.Interpolate(center, pt2, increment));
+                }
             }
 
             XPoint centerTibia = DrawingUtil.Instance.Interpolate(center, polyPoints[0], -userParameters_["Tibia / Spine Angle"].Percentage);
