@@ -163,20 +163,20 @@
     <Content Include="Content\Depth of squat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Content\Finished1.png" />
-    <Resource Include="Content\Finished10.png" />
-    <Resource Include="Content\Finished11.png" />
-    <Resource Include="Content\Finished12.png" />
+    <Resource Include="Content\HipFlex.png" />
+    <Resource Include="Content\HipAbd.png" />
+    <Resource Include="Content\HipInt.png" />
+    <Resource Include="Content\HipExt.png" />
     <Resource Include="Content\Finished13.png" />
     <Resource Include="Content\Finished14.png" />
     <Resource Include="Content\Finished2.png" />
     <Resource Include="Content\Finished3.png" />
     <Resource Include="Content\Finished4.png" />
     <Resource Include="Content\Finished5.png" />
-    <Resource Include="Content\Finished6.png" />
-    <Resource Include="Content\Finished7.png" />
+    <Resource Include="Content\AnkleFlex.png" />
+    <Resource Include="Content\KneeFlex.png" />
     <Resource Include="Content\Finished8.png" />
-    <Resource Include="Content\Finished9.png" />
+    <Resource Include="Content\HSExt.png" />
     <Content Include="Content\Hip Flexion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

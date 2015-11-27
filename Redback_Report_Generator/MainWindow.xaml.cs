@@ -193,7 +193,7 @@ namespace Redback_Report_Generator
                     XGraphics gfx1 = XGraphics.FromPdfPage(rom_pdf);
 
                     ROM_Page rom_Page = new ROM_Page(rom_pdf, userProfile, userParameters);
-                    rom_Page.DrawHeader(gfx1);
+                    rom_Page.DrawHeader(gfx1, "ROM");
                     rom_Page.DrawGraph(gfx1);
                     
                     break;
@@ -205,7 +205,7 @@ namespace Redback_Report_Generator
                     XGraphics gfx2 = XGraphics.FromPdfPage(ohs_pdf);
 
                     OHS_Page squat_page = new OHS_Page(ohs_pdf, userProfile, userParameters);
-                    squat_page.DrawHeader(gfx2);
+                    squat_page.DrawHeader(gfx2, "Overhead Squat");
                     squat_page.DrawPentagon(gfx2);
                     squat_page.DrawBarCharts(gfx2);
                     break;

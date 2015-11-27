@@ -33,7 +33,7 @@ namespace Redback_Report_Generator
 
         }
 
-        public virtual void DrawHeader(XGraphics gfx)
+        public virtual void DrawHeader(XGraphics gfx, string reportName)
         {
             XRect userDetailsRect = new XRect(20, page_.Height * 0.025, quarterWidth_, page_.Height * 0.075);
             gfx.DrawRoundedRectangle(new XSolidBrush(XColor.FromKnownColor(XKnownColor.Gray)),
@@ -78,7 +78,7 @@ namespace Redback_Report_Generator
                 new XSize(10, 10));
 
             //needs to be variable
-            gfx.DrawString("Overhead Squat : ", new XFont("Arial", 10),
+            gfx.DrawString(reportName + " : ", new XFont("Arial", 10),
                 XBrushes.White, scoreRect.X + 10, scoreRect.Y + 35);
 
             gfx.DrawString(userProfile_.Score.ToString("0") + "%", new XFont("Arial", 10),

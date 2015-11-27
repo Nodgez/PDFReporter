@@ -18,9 +18,9 @@ namespace Redback_Report_Generator
         {
         }
 
-        public override void DrawHeader(XGraphics gfx)
+        public override void DrawHeader(XGraphics gfx, string reportName)
         {
-            base.DrawHeader(gfx);
+            base.DrawHeader(gfx, reportName);
         }
 
         #region pentagon 
