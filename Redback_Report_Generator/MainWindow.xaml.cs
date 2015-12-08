@@ -41,7 +41,7 @@ namespace Redback_Report_Generator
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.TargetSite.Name +  " " + ex.Message + "\n\n Contact developer with the above message");
+                    MessageBox.Show(ex.TargetSite.Name + " " + ex.Message + "\n\n Contact developer with the above message");
                 }
             }
         }
@@ -85,8 +85,8 @@ namespace Redback_Report_Generator
                     break;
                 case 3:
                     userProfile.Report = ReportType.LNG;
-                    rowStart = 34;
-                    rowEnd = 42;
+                    rowStart = 33;
+                    rowEnd = 41;
                     break;
                 default:
                     userProfile.Report = ReportType.TMS;
@@ -170,7 +170,7 @@ namespace Redback_Report_Generator
                                         side = "RIGHT ";
                                     break;
                                 case ReportType.LNG:
-                                    side = row >= 33 ? "LEFT " : "RIGHT ";
+                                    side = row < 37 ? "LEFT " : "RIGHT ";
                                     break;
                             }
                             userParameter.Name = side + currentCell.Text;
@@ -184,8 +184,37 @@ namespace Redback_Report_Generator
             PdfDocument document = new PdfDocument();
             document.Info.Title = "Redback Report - " + userProfile.Name;
 
+            PdfPage cover_page = document.AddPage();
+            XGraphics coverGfx = XGraphics.FromPdfPage(cover_page);
+            Cover_Page cover = new Cover_Page(cover_page, userProfile, (ReportType)cmbx_Reports.SelectedIndex, coverGfx);
+
             switch (cmbx_Reports.SelectedIndex)
             {
+                case 0:
+                    PdfPage page = document.AddPage();
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    ROM_Page rom = new ROM_Page(page, userProfile, userParameters);
+                    rom.DrawHeader(gfx, "ROM");
+                    rom.DrawGraph(gfx);
+
+                    page = document.AddPage();
+                    gfx = XGraphics.FromPdfPage(page);
+
+                    OHS_Page squat = new OHS_Page(page, userProfile, userParameters);
+                    squat.DrawHeader(gfx, "Overhead Squat");
+                    squat.DrawPentagon(gfx);
+                    squat.DrawBarCharts(gfx);
+
+                    page = document.AddPage();
+                    gfx = XGraphics.FromPdfPage(page);
+
+                    Lunge_Page lunge = new Lunge_Page(page, userProfile, userParameters);
+                    lunge.DrawHeader(gfx, "Lunge");
+                    lunge.DrawStats(gfx);
+
+                    break;
+
                 case 1:
                     // Create an empty page
                     PdfPage rom_pdf = document.AddPage();
@@ -209,6 +238,18 @@ namespace Redback_Report_Generator
                     squat_page.DrawPentagon(gfx2);
                     squat_page.DrawBarCharts(gfx2);
                     break;
+
+                case 3:
+                    // Create an empty page
+                    PdfPage lunge_pdf = document.AddPage();
+                    // Get an XGraphics object for drawing
+                    XGraphics gfx3 = XGraphics.FromPdfPage(lunge_pdf);
+
+                    Lunge_Page lunge_Page = new Lunge_Page(lunge_pdf, userProfile, userParameters);
+                    lunge_Page.DrawHeader(gfx3, "Lunge");
+                    lunge_Page.DrawStats(gfx3);
+
+                    break;
             }
 
             string rbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Redback Reports\";
@@ -216,7 +257,7 @@ namespace Redback_Report_Generator
                 Directory.CreateDirectory(rbDirectory);
 
             // Save the document...
-            string filename = rbDirectory + userProfile.Name + " Redback Report.pdf";
+            string filename = rbDirectory + userProfile.Name + " RB Report.pdf";
             document.Save(filename);
             txt_FilePath.Text = "File location :" + filename;
             // ...and start a viewer.

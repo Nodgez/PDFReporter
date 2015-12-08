@@ -111,8 +111,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Code\Cover_Page.cs" />
     <Compile Include="Code\DoubleBar.cs" />
     <Compile Include="Code\DrawingUtil.cs" />
+    <Compile Include="Code\Lunge_Page.cs" />
     <Compile Include="Code\OHS_Page.cs" />
     <Compile Include="Code\Page elements\Pagel.cs" />
     <Compile Include="Code\Parameter.cs" />
@@ -168,10 +170,8 @@
     <Resource Include="Content\HipInt.png" />
     <Resource Include="Content\HipExt.png" />
     <Resource Include="Content\Finished13.png" />
-    <Resource Include="Content\Finished14.png" />
     <Resource Include="Content\Finished2.png" />
     <Resource Include="Content\Finished3.png" />
-    <Resource Include="Content\Finished4.png" />
     <Resource Include="Content\Finished5.png" />
     <Resource Include="Content\AnkleFlex.png" />
     <Resource Include="Content\KneeFlex.png" />

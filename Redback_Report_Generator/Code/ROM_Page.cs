@@ -96,9 +96,9 @@ namespace Redback_Report_Generator
             XPoint[] percentagePoints = new XPoint[polyPoints.Length];
             for (int k = 0; k < polyPoints.Length; k++)
             {
-                KeyValuePair<string, Parameter> kv = userParameters_.ElementAt(k);
-                percentagePoints[k] = DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.Value.Percentage);
-                gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.Value.RedVal));
+                Parameter kv = userParameters_.ElementAt(k);
+                percentagePoints[k] = DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.Percentage);
+                gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.RedVal));
             }
 
             gfx.DrawPolygon(new XPen(XColor.FromArgb(1, 0, 255, 255)),
@@ -109,9 +109,9 @@ namespace Redback_Report_Generator
             //right side
             for (int k = 10; k < polyPoints.Length + 10; k++)
             {
-                KeyValuePair<string, Parameter> kv = userParameters_.ElementAt(k);
-                percentagePoints[k - 10] = DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.Value.Percentage);
-                gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.Value.RedVal));
+                Parameter kv = userParameters_.ElementAt(k);
+                percentagePoints[k - 10] = DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.Percentage);
+                gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.RedVal));
             }
 
             gfx.DrawPolygon(new XPen(XColor.FromArgb(1, 0, 255, 255)),
@@ -137,8 +137,8 @@ namespace Redback_Report_Generator
                 
                 XFont arial = new XFont("Arial", 13);
 
-                Parameter leftParam = userParameters_.ElementAt(l).Value;
-                Parameter rightParam = userParameters_.ElementAt(l + 10).Value;
+                Parameter leftParam = userParameters_.ElementAt(l);
+                Parameter rightParam = userParameters_.ElementAt(l + 10);
 
                 if (leftParam.Color == "Amber")
                     leftParamCol = new XSolidBrush(XColor.FromArgb(199, 171, 14));

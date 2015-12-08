@@ -13,7 +13,7 @@ namespace Redback_Report_Generator
     {
         protected PdfPage page_;
         protected ProfileInfo userProfile_;
-        protected Dictionary<string, Parameter> userParameters_ = new Dictionary<string, Parameter>();
+        protected List<Parameter> userParameters_ = new List<Parameter>();
         protected XUnit quarterWidth_;
 
         protected XSolidBrush backgroundBrush;
@@ -24,8 +24,7 @@ namespace Redback_Report_Generator
             this.page_ = page;
             this.userProfile_ = userProfile;
 
-            foreach (Parameter p in userParameters)
-                this.userParameters_.Add(p.Name.TrimEnd(), p);
+            this.userParameters_ = userParameters;
 
             quarterWidth_ = page_.Width / 4;
             cornerRadius = new XSize(40, 40);

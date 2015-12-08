@@ -56,11 +56,11 @@ namespace Redback_Report_Generator
             XImage pelvicImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Pelvic Stability.png");
 
             //infoboxes
-            DrawPentaInfoBox(gfx, polyPoints[0] + new XPoint(-50, -75), tibia_spineImg, userParameters_["Tibia / Spine Angle"]);
-            DrawPentaInfoBox(gfx, polyPoints[1] + new XPoint(25, -35), rightKneeImg, userParameters_["RIGHT Knee Stability"]);
-            DrawPentaInfoBox(gfx, polyPoints[2] + new XPoint(25, -60), pelvicImg, userParameters_["Pelvic Stability"]);
-            DrawPentaInfoBox(gfx, polyPoints[3] + new XPoint(-125, -60), dosImg, userParameters_["Depth of Squat"]);
-            DrawPentaInfoBox(gfx, polyPoints[4] + new XPoint(-100,-35), leftKneeImg, userParameters_["LEFT Knee Stability"]);
+            DrawPentaInfoBox(gfx, polyPoints[0] + new XPoint(-50, -75), tibia_spineImg, userParameters_[1]);
+            DrawPentaInfoBox(gfx, polyPoints[1] + new XPoint(25, -35), rightKneeImg, userParameters_[8]);
+            DrawPentaInfoBox(gfx, polyPoints[2] + new XPoint(25, -60), pelvicImg, userParameters_[2]);
+            DrawPentaInfoBox(gfx, polyPoints[3] + new XPoint(-125, -60), dosImg, userParameters_[0]);
+            DrawPentaInfoBox(gfx, polyPoints[4] + new XPoint(-100,-35), leftKneeImg, userParameters_[3]);
 
             //percentage Lines
             gfx.DrawString(0 + "%", new XFont("Arial", 10), XBrushes.Black, center + new XPoint(5, 0));
@@ -81,17 +81,17 @@ namespace Redback_Report_Generator
                 }
             }
 
-            XPoint centerTibia = DrawingUtil.Instance.Interpolate(center, polyPoints[0], -userParameters_["Tibia / Spine Angle"].Percentage);
-            XPoint centerRightKnee = DrawingUtil.Instance.Interpolate(center, polyPoints[1], -userParameters_["RIGHT Knee Stability"].Percentage);
-            XPoint centerPelvicStability = DrawingUtil.Instance.Interpolate(center, polyPoints[2], -userParameters_["Pelvic Stability"].Percentage);
-            XPoint centerDos = DrawingUtil.Instance.Interpolate(center, polyPoints[3], -userParameters_["Depth of Squat"].Percentage);
-            XPoint centerLeftKnee = DrawingUtil.Instance.Interpolate(center, polyPoints[4], -userParameters_["LEFT Knee Stability"].Percentage);
+            XPoint centerTibia = DrawingUtil.Instance.Interpolate(center, polyPoints[0], -userParameters_[1].Percentage);
+            XPoint centerRightKnee = DrawingUtil.Instance.Interpolate(center, polyPoints[1], -userParameters_[8].Percentage);
+            XPoint centerPelvicStability = DrawingUtil.Instance.Interpolate(center, polyPoints[2], -userParameters_[2].Percentage);
+            XPoint centerDos = DrawingUtil.Instance.Interpolate(center, polyPoints[3], -userParameters_[0].Percentage);
+            XPoint centerLeftKnee = DrawingUtil.Instance.Interpolate(center, polyPoints[4], -userParameters_[3].Percentage);
 
-            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[0], -userParameters_["Tibia / Spine Angle"].RedVal));
-            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[1], -userParameters_["RIGHT Knee Stability"].RedVal));
-            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[2], -userParameters_["Pelvic Stability"].RedVal));
-            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[3], -userParameters_["Depth of Squat"].RedVal));
-            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[4], -userParameters_["LEFT Knee Stability"].RedVal));
+            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[0], -userParameters_[1].RedVal));
+            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[1], -userParameters_[8].RedVal));
+            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[2], -userParameters_[2].RedVal));
+            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[3], -userParameters_[0].RedVal));
+            gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[4], -userParameters_[3].RedVal));
 
             gfx.DrawPolygon(new XPen(XColor.FromArgb(1, 0, 255, 255)),
                 new XSolidBrush(XColor.FromArgb(40,255,255,0)),
@@ -129,23 +129,23 @@ namespace Redback_Report_Generator
                 backgroundRect,
                 new XSize(40, 40));
 
-            DoubleBar ShoulderFlexionBar = new DoubleBar(userParameters_["LEFT Shoulder Flexion"], userParameters_["RIGHT Shoulder Flexion"], gfx);
+            DoubleBar ShoulderFlexionBar = new DoubleBar(userParameters_[4], userParameters_[9], gfx);
             ShoulderFlexionBar.Draw(new XPoint(quarterRectWidth - offset, backgroundPoint.Y + 20),
                 backgroundRect,
                 XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Shoulder Flexion.png"));
 
-            DoubleBar hipFlexionBar = new DoubleBar(userParameters_["LEFT Hip Flexion"], userParameters_["RIGHT Hip Flexion"], gfx);
+            DoubleBar hipFlexionBar = new DoubleBar(userParameters_[5], userParameters_[10], gfx);
             hipFlexionBar.Draw(new XPoint(quarterRectWidth * 2 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
                  XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Hip Flexion.png"));
 
-            DoubleBar kneeFlexionBar = new DoubleBar(userParameters_["LEFT Knee Flexion"], userParameters_["RIGHT Knee Flexion"], gfx);
+            DoubleBar kneeFlexionBar = new DoubleBar(userParameters_[6], userParameters_[11], gfx);
             kneeFlexionBar.Draw(new XPoint(quarterRectWidth * 3 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
                 XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Knee Flexion.png"));
 
 
-            DoubleBar ankleFlexionBar = new DoubleBar(userParameters_["LEFT Ankle Flexion"], userParameters_["RIGHT Ankle Flexion"], gfx);
+            DoubleBar ankleFlexionBar = new DoubleBar(userParameters_[7], userParameters_[12], gfx);
             ankleFlexionBar.Draw(new XPoint(quarterRectWidth * 4 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
                 XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Ankle Flexion.png"));

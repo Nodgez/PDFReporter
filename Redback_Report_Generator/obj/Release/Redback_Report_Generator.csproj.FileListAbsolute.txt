@@ -34,3 +34,37 @@ C:\Users\kevin\Documents\Visual Studio 2015\Projects\Redback_Report_Generator\Re
 C:\Users\kevin\Documents\Visual Studio 2015\Projects\Redback_Report_Generator\Redback_Report_Generator\obj\Release\Redback_Report_Generator.exe
 C:\Users\kevin\Documents\Visual Studio 2015\Projects\Redback_Report_Generator\Redback_Report_Generator\obj\Release\Redback_Report_Generator.pdb
 C:\Users\kevin\Documents\Visual Studio 2015\Projects\Redback_Report_Generator\Redback_Report_Generator\obj\Release\Redback_Report_Generator.csprojResolveAssemblyReference.cache
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Redback_Report_Generator.exe.config
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.exe
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.pdb
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Ankle Flexion.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Depth of squat.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Hip Flexion.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Knee Flexion.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Left Knee Stability.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Pelvic Stability.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Redback 3D logo.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\right knee stability.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Shoulder Flexion.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Content\Tibia Spine Angle.png
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Redback_Report_Generator.exe.manifest
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Redback_Report_Generator.application
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Redback_Report_Generator.exe
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\Redback_Report_Generator.pdb
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\PdfSharp-WPF.pdb
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\PdfSharp-WPF.xml
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\bin\Release\de\PdfSharp-WPF.resources.dll
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.csprojResolveAssemblyReference.cache
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Generating.g.cs
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\MainWindow.g.cs
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\App.g.cs
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator_Content.g.cs
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator_MarkupCompile.cache
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator_MarkupCompile.lref
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Generating.baml
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\MainWindow.baml
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.g.resources
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.Properties.Resources.resources
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.csproj.GenerateResource.Cache
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.exe.manifest
+C:\Users\Nodgez\Documents\ClientProjects\PDFReporter\Redback_Report_Generator\obj\Release\Redback_Report_Generator.application
