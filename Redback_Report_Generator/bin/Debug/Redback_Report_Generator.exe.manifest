@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Redback_Report_Generator.exe" size="869288">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Redback_Report_Generator.exe" size="870824">
       <assemblyIdentity name="Redback_Report_Generator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zRtmBux1QrZxh9ERktL9BLS+KkKhoYvcI1VgSwcu73k=</dsig:DigestValue>
+        <dsig:DigestValue>ItDWG/CJWpvCYJHiPXaXoaftCqOoElrrmFOrGv4jbGY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

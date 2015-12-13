@@ -30,15 +30,14 @@ namespace Redback_Report_Generator
             
             XBrush brush = XBrushes.Black;
 
-            if (parameterLeft.LSI >= 75)
-                brush = XBrushes.Green;
-            else
-                brush = XBrushes.Gold;
+            brush = DrawingUtil.Instance.ChooseBrushColor(parameterLeft.LSI, 49, 74);
 
-            gfx.DrawRoundedRectangle(brush, 
-                new XRect(basePoint + new XPoint(-baseRect.Width * 0.05, baseRect.Height * 0.075),
-                new XSize(baseRect.Width * 0.1, baseRect.Height * 0.075)),
-                new XSize(10,10));
+            XRect r = new XRect(basePoint + new XPoint(-baseRect.Width * 0.05, baseRect.Height * 0.075),
+                new XSize(baseRect.Width * 0.1, baseRect.Height * 0.075));
+
+            DrawingUtil.DrawOutlineRect(r, gfx, new XSize(10, 10));
+
+            gfx.DrawRoundedRectangle(brush, r, new XSize(10,10));
             gfx.DrawString(parameterLeft.LSI.ToString("0") + "%",
                 subfont,
                 XBrushes.Black,

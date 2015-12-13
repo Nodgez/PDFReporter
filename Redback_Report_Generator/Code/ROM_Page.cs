@@ -15,30 +15,29 @@ namespace Redback_Report_Generator
             base(page, userInfo, userParameters)
         { }
 
-        public override void DrawHeader(XGraphics gfx, string reportName)
-        {
-            base.DrawHeader(gfx, reportName);
-        }
-
         public void DrawGraph(XGraphics gfx)
         {
             double yOff = page_.Height * 0.11;
 
             XRect rect = new XRect(20, yOff, page_.Width - 40, page_.Height - (yOff + 20));
+            DrawingUtil.DrawOutlineRect(rect, gfx, cornerRadius);
+
             gfx.DrawRoundedRectangle(backgroundBrush, rect, cornerRadius);
             XPoint center = new XPoint(page_.Width * 0.5, page_.Height * 0.45);
 
             //Left & right boxes
             XRect leftRect = new XRect(center.X - 250, yOff + 5, 160, 25);
             XRect rightRect = new XRect(center.X + 90, yOff + 5, 160, 25);
+            DrawingUtil.DrawOutlineRect(leftRect, gfx, new XSize(10,10));
             gfx.DrawRoundedRectangle(XBrushes.Yellow, leftRect, new XSize(10, 10));
+            DrawingUtil.DrawOutlineRect(rightRect, gfx, new XSize(10,10));
             gfx.DrawRoundedRectangle(XBrushes.CornflowerBlue, rightRect, new XSize(10, 10));
             gfx.DrawString("Left : ", new XFont("Arial", 20), XBrushes.Black, new XPoint(leftRect.X + 80, leftRect.Y + 15), XStringFormats.Center);
             gfx.DrawString("Right : ", new XFont("Arial", 20), XBrushes.Black, new XPoint(rightRect.X + 80, rightRect.Y + 15), XStringFormats.Center);
 
             float graphSize = (float)page_.Height * 0.175f;
             XPoint[] polyPoints = DrawingUtil.Instance.GeneratePoints(center, graphSize, 7, gfx);
-            gfx.DrawPolygon(XBrushes.DimGray, polyPoints, XFillMode.Winding);
+            gfx.DrawPolygon(backgroundBrush, polyPoints, XFillMode.Winding);
 
             XPen yellowPen = new XPen(XColors.Yellow, 2.5);
             XPen greenPen = new XPen(XColors.Green, 2.5);
@@ -106,6 +105,8 @@ namespace Redback_Report_Generator
                 percentagePoints,
                 XFillMode.Alternate);
 
+            gfx.DrawLines(new XPen(XColor.FromArgb(255, 255, 255, 0), 2), percentagePoints);
+
             //right side
             for (int k = 10; k < polyPoints.Length + 10; k++)
             {
@@ -119,12 +120,21 @@ namespace Redback_Report_Generator
                 percentagePoints,
                 XFillMode.Alternate);
 
+            gfx.DrawLines(new XPen(XColor.FromArgb(255, 54, 127, 180), 2), percentagePoints);
+
             XRect leftRectLSI = new XRect(center.X - 250, page_.Height * 0.725, 120, 25);
             XRect rightRectLSI = new XRect(center.X + 70, page_.Height * 0.725, 120, 25);
             XRect LSIRect = new XRect(page_.Width - 100, page_.Height * 0.725, 35, 25);
-            gfx.DrawRoundedRectangle(XBrushes.Yellow, leftRectLSI, new XSize(10, 10));
-            gfx.DrawRoundedRectangle(XBrushes.CornflowerBlue, rightRectLSI, new XSize(10, 10));
-            gfx.DrawRoundedRectangle(XBrushes.LightGray, LSIRect, new XSize(10, 10));
+
+            XSize rad = new XSize(10, 10);
+
+            DrawingUtil.DrawOutlineRect(leftRectLSI, gfx, rad);
+            DrawingUtil.DrawOutlineRect(rightRectLSI, gfx, rad);
+            DrawingUtil.DrawOutlineRect(LSIRect, gfx, rad);
+
+            gfx.DrawRoundedRectangle(XBrushes.Yellow, leftRectLSI,rad);
+            gfx.DrawRoundedRectangle(XBrushes.CornflowerBlue, rightRectLSI, rad);
+            gfx.DrawRoundedRectangle(XBrushes.LightGray, LSIRect, rad);
             gfx.DrawString("Left", new XFont("Arial", 14), XBrushes.Black, new XPoint(leftRectLSI.X + 60, leftRectLSI.Y + 12.5), XStringFormats.Center);
             gfx.DrawString("Right", new XFont("Arial", 14), XBrushes.Black, new XPoint(rightRectLSI.X + 60, rightRectLSI.Y + 12.5), XStringFormats.Center);
             gfx.DrawString("LSI", new XFont("Arial", 14), XBrushes.Black, new XPoint(LSIRect.X + 17.5, LSIRect.Y + 10), XStringFormats.Center);
@@ -135,25 +145,15 @@ namespace Redback_Report_Generator
                 XBrush rightParamCol = XBrushes.Green;
                 XBrush lsiParamCol = XBrushes.Green;
                 
-                XFont arial = new XFont("Arial", 13);
+                XFont arial = new XFont("Arial", 13,XFontStyle.Bold);
 
                 Parameter leftParam = userParameters_.ElementAt(l);
-                Parameter rightParam = userParameters_.ElementAt(l + 10);
+                Parameter rightParam = userParameters_.ElementAt(l + 10);;
 
-                if (leftParam.Color == "Amber")
-                    leftParamCol = new XSolidBrush(XColor.FromArgb(199, 171, 14));
-                else if (leftParam.Color == "Red")
-                    leftParamCol = XBrushes.Red;
+                leftParamCol = DrawingUtil.Instance.ChooseBrushColor(leftParam.Value, leftParam.RedVal, leftParam.AmberVal);
+                rightParamCol = DrawingUtil.Instance.ChooseBrushColor(rightParam.Value, leftParam.RedVal, leftParam.AmberVal);
 
-                if (rightParam.Color == "Amber")
-                    rightParamCol = new XSolidBrush(XColor.FromArgb(199, 171, 14));
-                else if (rightParam.Color == "Red")
-                    rightParamCol = XBrushes.Red;
 
-                if (leftParam.LSI < leftParam.RedVal)
-                    leftParamCol = XBrushes.Red;
-                else if (leftParam.LSI < leftParam.AmberVal)
-                    leftParamCol = XBrushes.Yellow;
 
                 char degree = Convert.ToChar('\u00b0');
 
@@ -161,16 +161,23 @@ namespace Redback_Report_Generator
                 double y = page_.Height * 0.775 + increment;
 
                 XRect rl = new XRect(leftRectLSI.X + (leftRectLSI.Width * 0.5) - 25, y, 50, 15);
-                gfx.DrawRoundedRectangle(leftParamCol, rl, new XSize(10, 10));
+                DrawingUtil.DrawOutlineRect(rl, gfx, rad);
+
+                gfx.DrawRoundedRectangle(leftParamCol, rl, rad);
                 gfx.DrawString(leftParam.Value.ToString() + degree, arial, XBrushes.Black, new XPoint(rl.X + 25, rl.Y + 7.5), XStringFormats.Center);
 
                 XRect rr = new XRect(rightRectLSI.X + (rightRectLSI.Width * 0.5) - 25, y, 50, 15);
-                gfx.DrawRoundedRectangle(rightParamCol, rr, new XSize(10, 10));
+                DrawingUtil.DrawOutlineRect(rr, gfx, rad);
+
+                gfx.DrawRoundedRectangle(rightParamCol, rr, rad);
                 gfx.DrawString(rightParam.Value.ToString() + degree, arial, XBrushes.Black, new XPoint(rr.X + 25, rr.Y + 7.5), XStringFormats.Center);
 
                 XRect rlsi = new XRect(LSIRect.X + (LSIRect.Width * 0.5) - 17.5, y, 35, 15);
-                gfx.DrawRoundedRectangle(lsiParamCol, rlsi, new XSize(10, 10));
-                gfx.DrawString(leftParam.LSI.ToString() + degree, arial, XBrushes.Black, new XPoint(rlsi.X + 17.5, rlsi.Y + 7.5), XStringFormats.Center);
+                DrawingUtil.DrawOutlineRect(rlsi, gfx, rad);
+
+                lsiParamCol = DrawingUtil.Instance.ChooseBrushColor(leftParam.LSI, 49, 74);
+                gfx.DrawRoundedRectangle(lsiParamCol, rlsi, rad);
+                gfx.DrawString(leftParam.LSI.ToString("0") + degree, arial, XBrushes.Black, new XPoint(rlsi.X + 17.5, rlsi.Y + 7.5), XStringFormats.Center);
 
                 gfx.DrawString(leftParam.Name.Substring(4,leftParam.Name.Length - 4), new XFont("Arial", 10), XBrushes.Black,
                     DrawingUtil.Instance.Interpolate(new XPoint(rl.X + rl.Width, y + 7.5), new XPoint(rr.X, y), -0.5), XStringFormats.TopCenter);

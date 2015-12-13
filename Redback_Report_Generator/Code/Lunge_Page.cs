@@ -14,11 +14,6 @@ namespace Redback_Report_Generator
         public Lunge_Page(PdfPage page, ProfileInfo profleInfo, List<Parameter> userParameters) : base(page, profleInfo, userParameters)
         { }
 
-        public override void DrawHeader(XGraphics gfx, string reportName)
-        {
-            base.DrawHeader(gfx, reportName);
-        }
-
         public void DrawStats(XGraphics gfx)
         {
             XFont large = new XFont("Arial", 20);
@@ -27,6 +22,7 @@ namespace Redback_Report_Generator
             double yOff = page_.Height * 0.11;
 
             XRect rect = new XRect(20, yOff, page_.Width - 40, page_.Height - (yOff + 20));
+            DrawingUtil.DrawOutlineRect(rect, gfx, cornerRadius);
             gfx.DrawRoundedRectangle(backgroundBrush, rect, cornerRadius);
             XPoint center = new XPoint(page_.Width * 0.5, page_.Height * 0.45);
 

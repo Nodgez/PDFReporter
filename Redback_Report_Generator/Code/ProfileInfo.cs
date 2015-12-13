@@ -25,6 +25,9 @@ namespace Redback_Report_Generator
         public string Sport { get; set; }
         public string Gender { get; set; }
         public ReportType Report { get; set; }
+        public string ROMScore { get; set; }
+        public string LNGScore { get; set; }
+        public string OHSScire { get; set; }
 
         public ProfileInfo()
         { }

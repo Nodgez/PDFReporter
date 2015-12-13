@@ -17,11 +17,11 @@ namespace Redback_Report_Generator
         public XBrush ChooseBrushColor(double value, double redVal, double amberVal)
         {
             if (value <= redVal)
-                return XBrushes.Red;
+                return new XSolidBrush(XColor.FromArgb(255, 0, 0));
             else if (value > redVal && value <= amberVal)
-                return XBrushes.Gold;
+                return new XSolidBrush(XColor.FromArgb(255, 204, 0));
 
-            return XBrushes.Green;
+            return new XSolidBrush(XColor.FromArgb(0, 153, 51));
 
         }
 
@@ -72,6 +72,12 @@ namespace Redback_Report_Generator
 
                 return _instance;
             }
+        }
+
+        public static void DrawOutlineRect(XRect rect, XGraphics gfx, XSize rounded)
+        {
+            rect = new XRect(rect.Left - 1,rect.Top - 1, rect.Width + 2, rect.Height + 2);
+            gfx.DrawRoundedRectangle(XBrushes.Black, rect, rounded);
         }
     }
 }

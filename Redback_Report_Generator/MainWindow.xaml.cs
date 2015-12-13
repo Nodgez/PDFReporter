@@ -141,9 +141,9 @@ namespace Redback_Report_Generator
                             break;
                         case 3:
                             if (currentCell.Text != "")
-                                userParameter.LSI = Convert.ToDouble(currentCell.Text); break;
+                                userParameter.LSI = Math.Round(Convert.ToDouble(currentCell.Text)); break;
                         case 4:
-                            userParameter.UnitOfMeasure = currentCell.Text;
+                            userParameter.UnitOfMeasure = currentCell.Text == "degrees" ? Convert.ToChar('\u00b0').ToString() : currentCell.Text;
                             break;
                         case 5:
                             userParameter.RedVal = Convert.ToDouble(currentCell.Text) * 0.01;
@@ -179,6 +179,7 @@ namespace Redback_Report_Generator
                 }
                 userParameters.Add(userParameter);
                 //Console.ReadKey();
+
             }
             // Create a new PDF document
             PdfDocument document = new PdfDocument();
@@ -187,7 +188,8 @@ namespace Redback_Report_Generator
             PdfPage cover_page = document.AddPage();
             XGraphics coverGfx = XGraphics.FromPdfPage(cover_page);
             Cover_Page cover = new Cover_Page(cover_page, userProfile, (ReportType)cmbx_Reports.SelectedIndex, coverGfx);
-
+            int score = 0;
+            string sctxt = "";
             switch (cmbx_Reports.SelectedIndex)
             {
                 case 0:
@@ -195,14 +197,18 @@ namespace Redback_Report_Generator
                     XGraphics gfx = XGraphics.FromPdfPage(page);
 
                     ROM_Page rom = new ROM_Page(page, userProfile, userParameters);
-                    rom.DrawHeader(gfx, "ROM");
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 5].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    rom.DrawHeader(gfx, "ROM", score);
                     rom.DrawGraph(gfx);
 
                     page = document.AddPage();
                     gfx = XGraphics.FromPdfPage(page);
 
-                    OHS_Page squat = new OHS_Page(page, userProfile, userParameters);
-                    squat.DrawHeader(gfx, "Overhead Squat");
+                    OHS_Page squat = new OHS_Page(page, userProfile, userParameters, 20);
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 4].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    squat.DrawHeader(gfx, "Overhead Squat", score);
                     squat.DrawPentagon(gfx);
                     squat.DrawBarCharts(gfx);
 
@@ -210,7 +216,9 @@ namespace Redback_Report_Generator
                     gfx = XGraphics.FromPdfPage(page);
 
                     Lunge_Page lunge = new Lunge_Page(page, userProfile, userParameters);
-                    lunge.DrawHeader(gfx, "Lunge");
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 3].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    lunge.DrawHeader(gfx, "Lunge" , score);
                     lunge.DrawStats(gfx);
 
                     break;
@@ -222,7 +230,9 @@ namespace Redback_Report_Generator
                     XGraphics gfx1 = XGraphics.FromPdfPage(rom_pdf);
 
                     ROM_Page rom_Page = new ROM_Page(rom_pdf, userProfile, userParameters);
-                    rom_Page.DrawHeader(gfx1, "ROM");
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 5].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    rom_Page.DrawHeader(gfx1, "ROM", score);
                     rom_Page.DrawGraph(gfx1);
                     
                     break;
@@ -234,7 +244,9 @@ namespace Redback_Report_Generator
                     XGraphics gfx2 = XGraphics.FromPdfPage(ohs_pdf);
 
                     OHS_Page squat_page = new OHS_Page(ohs_pdf, userProfile, userParameters);
-                    squat_page.DrawHeader(gfx2, "Overhead Squat");
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 4].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    squat_page.DrawHeader(gfx2, "Overhead Squat", score);
                     squat_page.DrawPentagon(gfx2);
                     squat_page.DrawBarCharts(gfx2);
                     break;
@@ -246,7 +258,9 @@ namespace Redback_Report_Generator
                     XGraphics gfx3 = XGraphics.FromPdfPage(lunge_pdf);
 
                     Lunge_Page lunge_Page = new Lunge_Page(lunge_pdf, userProfile, userParameters);
-                    lunge_Page.DrawHeader(gfx3, "Lunge");
+                    sctxt = dataSheet.Rows[dataSheet.Rows.Length - 3].Cells[1].Text;
+                    score = (int)Math.Round(Convert.ToDouble(sctxt));
+                    lunge_Page.DrawHeader(gfx3, "Lunge", score);
                     lunge_Page.DrawStats(gfx3);
 
                     break;
