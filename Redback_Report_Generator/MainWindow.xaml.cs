@@ -60,7 +60,11 @@ namespace Redback_Report_Generator
 
             //read the uer profile data
             userProfile.Name = profileSheet.Rows[0].Cells[0].Text;
-            userProfile.Date = profileSheet.Rows[1].Cells[0].Text;
+            DateTime t = new DateTime(1900, 1, 1);
+            double num = 0;
+            Double.TryParse(profileSheet.Rows[1].Cells[0].Text, out num);
+            t = t.AddDays(num - 2);
+            userProfile.Date = t;
             userProfile.Opperator = profileSheet.Rows[2].Cells[0].Text;
             userProfile.RBID = profileSheet.Rows[3].Cells[0].Text;
             userProfile.Sport = profileSheet.Rows[4].Cells[0].Text;
@@ -73,18 +77,26 @@ namespace Redback_Report_Generator
             {
                 case 0:
                     userProfile.Report = ReportType.TMS;
+                    userProfile.reportHeading = profileSheet.Rows[6].Cells[0].Text;
+                    userProfile.ReportText = profileSheet.Rows[7].Cells[0].Text;
                     break;
                 case 1:
                     userProfile.Report = ReportType.ROM;
+                    userProfile.reportHeading = profileSheet.Rows[8].Cells[0].Text;
+                    userProfile.ReportText = profileSheet.Rows[9].Cells[0].Text;
                     rowEnd = 20;
                     break;
                 case 2:
                     userProfile.Report = ReportType.OHS;
+                    userProfile.reportHeading = profileSheet.Rows[10].Cells[0].Text;
+                    userProfile.ReportText = profileSheet.Rows[11].Cells[0].Text;
                     rowStart = 20;
                     rowEnd = 34;
                     break;
                 case 3:
                     userProfile.Report = ReportType.LNG;
+                    userProfile.reportHeading = profileSheet.Rows[12].Cells[0].Text;
+                    userProfile.ReportText = profileSheet.Rows[13].Cells[0].Text;
                     rowStart = 33;
                     rowEnd = 41;
                     break;
@@ -187,7 +199,7 @@ namespace Redback_Report_Generator
 
             PdfPage cover_page = document.AddPage();
             XGraphics coverGfx = XGraphics.FromPdfPage(cover_page);
-            Cover_Page cover = new Cover_Page(cover_page, userProfile, (ReportType)cmbx_Reports.SelectedIndex, coverGfx);
+            Cover_Page cover = new Cover_Page(cover_page, userProfile, coverGfx);
             int score = 0;
             string sctxt = "";
             switch (cmbx_Reports.SelectedIndex)
@@ -215,7 +227,7 @@ namespace Redback_Report_Generator
                     page = document.AddPage();
                     gfx = XGraphics.FromPdfPage(page);
 
-                    Lunge_Page lunge = new Lunge_Page(page, userProfile, userParameters);
+                    Lunge_Page lunge = new Lunge_Page(page, userProfile, userParameters, 33);
                     sctxt = dataSheet.Rows[dataSheet.Rows.Length - 3].Cells[1].Text;
                     score = (int)Math.Round(Convert.ToDouble(sctxt));
                     lunge.DrawHeader(gfx, "Lunge" , score);
@@ -266,14 +278,19 @@ namespace Redback_Report_Generator
                     break;
             }
 
+            PdfPage glossary_Page = document.AddPage();
+            XGraphics glosGfx = XGraphics.FromPdfPage(glossary_Page);
+
+            Glossary_Page gp = new Glossary_Page(glossary_Page, glosGfx);
+
             string rbDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Redback Reports\";
             if (!Directory.Exists(rbDirectory))
                 Directory.CreateDirectory(rbDirectory);
 
             // Save the document...
-            string filename = rbDirectory + userProfile.Name + " RB Report.pdf";
+            string filename = rbDirectory + userProfile.Name + ((ReportType)cmbx_Reports.SelectedIndex).ToString() +  " RB Report.pdf";
             document.Save(filename);
-            txt_FilePath.Text = "File location :" + filename;
+            txt_FilePath.Text = "File location :" + rbDirectory;
             // ...and start a viewer.
             pdfProcess = Process.Start(filename);
         }

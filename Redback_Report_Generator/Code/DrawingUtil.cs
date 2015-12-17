@@ -25,6 +25,17 @@ namespace Redback_Report_Generator
 
         }
 
+        public XBrush ChooseBrushColor(string value)
+        {
+            if (value == "Red")
+                return new XSolidBrush(XColor.FromArgb(255, 0, 0));
+            else if (value ==  "Amber")
+                return new XSolidBrush(XColor.FromArgb(255, 204, 0));
+
+            return new XSolidBrush(XColor.FromArgb(0, 153, 51));
+
+        }
+
         public XPoint[] GeneratePoints(XPoint center, float size, int sides, XGraphics gfx, int angleOffset = 270)
         {
             XPoint[] points = new XPoint[sides + 1];
@@ -41,8 +52,6 @@ namespace Redback_Report_Generator
                 points[i] = location;
             }
             points[sides] = points[0];
-
-            gfx.DrawLines(XPens.GreenYellow, points);
             return points;
         }
 

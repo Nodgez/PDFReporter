@@ -32,8 +32,8 @@ namespace Redback_Report_Generator
             gfx.DrawRoundedRectangle(XBrushes.Yellow, leftRect, new XSize(10, 10));
             DrawingUtil.DrawOutlineRect(rightRect, gfx, new XSize(10,10));
             gfx.DrawRoundedRectangle(XBrushes.CornflowerBlue, rightRect, new XSize(10, 10));
-            gfx.DrawString("Left : ", new XFont("Arial", 20), XBrushes.Black, new XPoint(leftRect.X + 80, leftRect.Y + 15), XStringFormats.Center);
-            gfx.DrawString("Right : ", new XFont("Arial", 20), XBrushes.Black, new XPoint(rightRect.X + 80, rightRect.Y + 15), XStringFormats.Center);
+            gfx.DrawString("Left", new XFont("Arial", 20), XBrushes.Black, new XPoint(leftRect.X + 80, leftRect.Y + 15), XStringFormats.Center);
+            gfx.DrawString("Right", new XFont("Arial", 20), XBrushes.Black, new XPoint(rightRect.X + 80, rightRect.Y + 15), XStringFormats.Center);
 
             float graphSize = (float)page_.Height * 0.175f;
             XPoint[] polyPoints = DrawingUtil.Instance.GeneratePoints(center, graphSize, 7, gfx);
@@ -55,8 +55,8 @@ namespace Redback_Report_Generator
             GraphIcon[] icons = new GraphIcon[] { hipFlexImg, hamStringImg, hipAbdImg, hipIntImg, hipExtImg, kneeFlexImg, AnkleFlexImg };
 
             //center out
-            foreach (XPoint p in polyPoints)
-                gfx.DrawLine(greenPen, center, p);
+            for (int l = 0; l < polyPoints.Length - 1; l++)
+                gfx.DrawLine(greenPen, center, polyPoints[l]);
 
             //percentage Lines & icons
             gfx.DrawString(0 + "%", new XFont("Arial", 10), XBrushes.Black, center + new XPoint(5, 0));
@@ -88,39 +88,52 @@ namespace Redback_Report_Generator
                 XPoint halfmg = new XPoint(-20, -20);
                 XPoint imgpos = new XPoint(dir.X * (-graphSize - 50), dir.Y * (-graphSize - 50)) + center + halfmg;
                 gfx.DrawImage(img, new XRect(imgpos, new XSize(wRatio * 60, 60)));
-                gfx.DrawString(icons[j].txt, new XFont("Arial", 10), XBrushes.Black, imgpos + new XPoint(txtOffset, -10), XStringFormats.Center);
+                gfx.DrawString(icons[j].txt, arialSmall, XBrushes.Black, imgpos + new XPoint(txtOffset, -10), XStringFormats.Center);
             }
 
             //leftSide
-            XPoint[] percentagePoints = new XPoint[polyPoints.Length];
-            for (int k = 0; k < polyPoints.Length; k++)
+            XPoint[] percentagePoints = new XPoint[polyPoints.Length - 1];
+            for (int k = 0; k < polyPoints.Length - 1; k++)
             {
                 Parameter kv = userParameters_.ElementAt(k);
                 percentagePoints[k] = DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.Percentage);
+                gfx.DrawLine(yellowPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.AmberVal));
                 gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k], -kv.RedVal));
             }
 
             gfx.DrawPolygon(new XPen(XColor.FromArgb(1, 0, 255, 255)),
-                new XSolidBrush(XColor.FromArgb(40, 255, 255, 0)),
+                new XSolidBrush(XColor.FromArgb(100, 255, 255, 0)),
                 percentagePoints,
                 XFillMode.Alternate);
+            XPoint[] linePoints = new XPoint[percentagePoints.Length + 1];
+            for (int i = 0; i < percentagePoints.Length; i++)
+            {
+                linePoints[i] = percentagePoints[i];
+            }
 
-            gfx.DrawLines(new XPen(XColor.FromArgb(255, 255, 255, 0), 2), percentagePoints);
+            linePoints[linePoints.Length - 1] = percentagePoints[0];
+            gfx.DrawLines(new XPen(XColor.FromArgb(255, 255, 255, 0), 2), linePoints);
 
             //right side
-            for (int k = 10; k < polyPoints.Length + 10; k++)
+            for (int k = 10; k < polyPoints.Length + 9; k++)
             {
                 Parameter kv = userParameters_.ElementAt(k);
                 percentagePoints[k - 10] = DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.Percentage);
+                gfx.DrawLine(yellowPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k -10], -kv.AmberVal));
                 gfx.DrawLine(redPen, center, DrawingUtil.Instance.Interpolate(center, polyPoints[k - 10], -kv.RedVal));
             }
 
             gfx.DrawPolygon(new XPen(XColor.FromArgb(1, 0, 255, 255)),
-                new XSolidBrush(XColor.FromArgb(40, 54, 127, 180)),
+                new XSolidBrush(XColor.FromArgb(100, 54, 127, 180)),
                 percentagePoints,
                 XFillMode.Alternate);
 
-            gfx.DrawLines(new XPen(XColor.FromArgb(255, 54, 127, 180), 2), percentagePoints);
+            for (int i = 0; i < percentagePoints.Length; i++)
+            {
+                linePoints[i] = percentagePoints[i];
+            }
+            linePoints[linePoints.Length - 1] = percentagePoints[0];
+            gfx.DrawLines(new XPen(XColor.FromArgb(255, 54, 127, 180), 2), linePoints);
 
             XRect leftRectLSI = new XRect(center.X - 250, page_.Height * 0.725, 120, 25);
             XRect rightRectLSI = new XRect(center.X + 70, page_.Height * 0.725, 120, 25);
@@ -150,10 +163,8 @@ namespace Redback_Report_Generator
                 Parameter leftParam = userParameters_.ElementAt(l);
                 Parameter rightParam = userParameters_.ElementAt(l + 10);;
 
-                leftParamCol = DrawingUtil.Instance.ChooseBrushColor(leftParam.Value, leftParam.RedVal, leftParam.AmberVal);
-                rightParamCol = DrawingUtil.Instance.ChooseBrushColor(rightParam.Value, leftParam.RedVal, leftParam.AmberVal);
-
-
+                leftParamCol = DrawingUtil.Instance.ChooseBrushColor(leftParam.Color);
+                rightParamCol = DrawingUtil.Instance.ChooseBrushColor(rightParam.Color);
 
                 char degree = Convert.ToChar('\u00b0');
 
@@ -177,7 +188,7 @@ namespace Redback_Report_Generator
 
                 lsiParamCol = DrawingUtil.Instance.ChooseBrushColor(leftParam.LSI, 49, 74);
                 gfx.DrawRoundedRectangle(lsiParamCol, rlsi, rad);
-                gfx.DrawString(leftParam.LSI.ToString("0") + degree, arial, XBrushes.Black, new XPoint(rlsi.X + 17.5, rlsi.Y + 7.5), XStringFormats.Center);
+                gfx.DrawString(leftParam.LSI.ToString("0") + "%", arial, XBrushes.Black, new XPoint(rlsi.X + 17.5, rlsi.Y + 7.5), XStringFormats.Center);
 
                 gfx.DrawString(leftParam.Name.Substring(4,leftParam.Name.Length - 4), new XFont("Arial", 10), XBrushes.Black,
                     DrawingUtil.Instance.Interpolate(new XPoint(rl.X + rl.Width, y + 7.5), new XPoint(rr.X, y), -0.5), XStringFormats.TopCenter);

@@ -67,26 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de\PdfSharp-WPF.resources.dll" size="5120">
-      <assemblyIdentity name="PdfSharp-WPF.resources" version="1.32.2608.0" publicKeyToken="F94615AA0424F9EB" language="de" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>F9FTqyg8NY/GzrjTds06YEF4wlg2TvINvFOrtSJGXyU=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Redback_Report_Generator.exe" size="870824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Redback_Report_Generator.exe" size="731048">
       <assemblyIdentity name="Redback_Report_Generator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ItDWG/CJWpvCYJHiPXaXoaftCqOoElrrmFOrGv4jbGY=</dsig:DigestValue>
+        <dsig:DigestValue>sW7ON3KIL93YDouM6WlU80as6I4fAekxZ+YxMiF0KWc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

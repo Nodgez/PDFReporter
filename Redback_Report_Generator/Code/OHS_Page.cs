@@ -50,18 +50,18 @@ namespace Redback_Report_Generator
             XSize size = new XSize(50, 50);
             XSize ellipseSize = new XSize(10, 10);
             //images
-            XImage leftKneeImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Left Knee Stability.png");
-            XImage rightKneeImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Right Knee Stability.png");
-            XImage tibia_spineImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Tibia Spine Angle.png");
-            XImage dosImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Depth of Squat.png");
-            XImage pelvicImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Pelvic Stability.png");
+            XImage leftKneeImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\LKS.png");
+            XImage rightKneeImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\RKS.png");
+            XImage tibia_spineImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\STA.png");
+            XImage dosImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\DOS.png");
+            XImage pelvicImg = XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\PS.png");
 
             //infoboxes
-            DrawPentaInfoBox(gfx, polyPoints[0] + new XPoint(-50, -75), tibia_spineImg, userParameters_[dataReadStart + 1]);
+            DrawPentaInfoBox(gfx, polyPoints[0] + new XPoint(-50, -70), tibia_spineImg, userParameters_[dataReadStart + 1]);
             DrawPentaInfoBox(gfx, polyPoints[1] + new XPoint(25, -35), rightKneeImg, userParameters_[dataReadStart + 8]);
             DrawPentaInfoBox(gfx, polyPoints[2] + new XPoint(25, -60), pelvicImg, userParameters_[dataReadStart + 2]);
             DrawPentaInfoBox(gfx, polyPoints[3] + new XPoint(-125, -60), dosImg, userParameters_[dataReadStart + 0]);
-            DrawPentaInfoBox(gfx, polyPoints[4] + new XPoint(-100,-35), leftKneeImg, userParameters_[dataReadStart + 3]);
+            DrawPentaInfoBox(gfx, polyPoints[4] + new XPoint(-120,-35), leftKneeImg, userParameters_[dataReadStart + 3]);
 
             //percentage Lines
             gfx.DrawString(0 + "%", new XFont("Arial", 10), XBrushes.Black, center + new XPoint(5, 0));
@@ -102,21 +102,19 @@ namespace Redback_Report_Generator
             gfx.DrawLines(new XPen(XColors.Orange, 1), new XPoint[] { centerTibia, centerRightKnee, centerPelvicStability, centerDos, centerLeftKnee, centerTibia });
         }
 
-        void DrawPentaInfoBox(XGraphics gfx, XPoint point, XImage image, Parameter parameter)
+        void DrawPentaInfoBox(XGraphics gfx, XPoint point, XImage img, Parameter parameter)
         {
+            double wRatio = (double)img.PixelWidth / (double)img.PixelHeight;
             double val = parameter.Value;
             string str = parameter.Name;
-            XBrush brush = DrawingUtil.Instance.ChooseBrushColor(parameter.Percentage,
-                parameter.RedVal,
-                parameter.AmberVal);
+            XBrush brush = DrawingUtil.Instance.ChooseBrushColor(parameter.Color);
             XSize ellipseSize = new XSize(10, 10);
-
             DrawingUtil.DrawOutlineRect(new XRect(point.X, point.Y + 10, 55, 30), gfx, ellipseSize);
             gfx.DrawRoundedRectangle(brush, new XRect(point.X, point.Y + 10, 55, 30), ellipseSize);
-            gfx.DrawString(str, new XFont("Arial", 12), XBrushes.White, point + new XPoint(0,60));
-            gfx.DrawString(val.ToString() + " " + parameter.UnitOfMeasure, new XFont("Arial", 10),
-                XBrushes.White, new XPoint(point.X + 25,point.Y + 25),XStringFormats.Center);
-            gfx.DrawImage(image, new XRect(point + new XPoint(50,0),new XSize(50,50)));
+            gfx.DrawString(str, arialSmall, XBrushes.Black, point + new XPoint(0,60));
+            gfx.DrawString(val.ToString() + " " + parameter.UnitOfMeasure, arialSmall,
+                XBrushes.Black, new XPoint(point.X + 25,point.Y + 25),XStringFormats.Center);
+            gfx.DrawImage(img, new XRect(point + new XPoint(60,0), new XSize(wRatio * 50, 50)));
         }
         #endregion
 
@@ -135,23 +133,23 @@ namespace Redback_Report_Generator
             DoubleBar ShoulderFlexionBar = new DoubleBar(userParameters_[dataReadStart + 4], userParameters_[dataReadStart + 9], gfx);
             ShoulderFlexionBar.Draw(new XPoint(quarterRectWidth - offset, backgroundPoint.Y + 20),
                 backgroundRect,
-                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Shoulder Flexion.png"));
+                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\DOS.png"));
 
             DoubleBar hipFlexionBar = new DoubleBar(userParameters_[dataReadStart + 5], userParameters_[dataReadStart + 10], gfx);
             hipFlexionBar.Draw(new XPoint(quarterRectWidth * 2 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
-                 XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Hip Flexion.png"));
+                 XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\DOS.png"));
 
             DoubleBar kneeFlexionBar = new DoubleBar(userParameters_[dataReadStart + 6], userParameters_[dataReadStart + 11], gfx);
             kneeFlexionBar.Draw(new XPoint(quarterRectWidth * 3 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
-                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Knee Flexion.png"));
+                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\DOS.png"));
 
 
             DoubleBar ankleFlexionBar = new DoubleBar(userParameters_[dataReadStart + 7], userParameters_[dataReadStart + 12], gfx);
             ankleFlexionBar.Draw(new XPoint(quarterRectWidth * 4 - offset, backgroundPoint.Y + 20),
                 backgroundRect,
-                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\Ankle Flexion.png"));
+                XImage.FromFile(Directory.GetCurrentDirectory() + @"\Content\DOS.png"));
 
             gfx.DrawString("Degrees :",
                 new XFont("Arial", 10),

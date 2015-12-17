@@ -19,7 +19,7 @@ namespace Redback_Report_Generator
             this.gfx = gfx;
         }
 
-        public void Draw(XPoint basePoint, XRect baseRect, XImage image)
+        public void Draw(XPoint basePoint, XRect baseRect, XImage img)
         {
             XFont headerFont = new XFont("Arial", 16);
             XFont subfont = new XFont("Arial", 10);
@@ -65,8 +65,10 @@ namespace Redback_Report_Generator
             gfx.DrawString("L", subfont, XBrushes.Black, bottom + new XPoint(5, -2));
             gfx.DrawString("R", subfont, XBrushes.Black, bottom + new XPoint(35, -2));
 
-            gfx.DrawImage(image, new XRect(bottom.X, bottom.Y, 50, 50));
-            image.Dispose();
+            double wRatio = (double)img.PixelWidth / (double)img.PixelHeight;
+
+            gfx.DrawImage(img, new XRect(new XPoint(bottom.X, bottom.Y), new XSize(wRatio * 50, 50)));
+            img.Dispose();
         }
 
         XPoint Interpolate(XPoint pt1, XPoint pt2, double amount)

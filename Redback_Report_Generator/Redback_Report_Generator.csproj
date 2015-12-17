@@ -114,6 +114,7 @@
     <Compile Include="Code\Cover_Page.cs" />
     <Compile Include="Code\DoubleBar.cs" />
     <Compile Include="Code\DrawingUtil.cs" />
+    <Compile Include="Code\Glossary_Page.cs" />
     <Compile Include="Code\Lunge_Page.cs" />
     <Compile Include="Code\OHS_Page.cs" />
     <Compile Include="Code\Page elements\Pagel.cs" />
@@ -169,8 +170,6 @@
     <Resource Include="Content\HipAbd.png" />
     <Resource Include="Content\HipInt.png" />
     <Resource Include="Content\HipExt.png" />
-    <Resource Include="Content\Finished13.png" />
-    <Resource Include="Content\Finished2.png" />
     <Resource Include="Content\Finished3.png" />
     <Resource Include="Content\Finished5.png" />
     <Resource Include="Content\AnkleFlex.png" />

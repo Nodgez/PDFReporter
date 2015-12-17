@@ -19,6 +19,9 @@ namespace Redback_Report_Generator
         protected XSolidBrush backgroundBrush;
         protected XSize cornerRadius;
         protected int dataReadStart = 0;
+        protected XFont arialSmall;
+        protected XFont arialLarge;
+        protected XFont arialSmallBold;
 
         public Report_Page(PdfPage page, ProfileInfo userProfile, List<Parameter> userParameters, int dataReadStart = 0)
         {
@@ -32,6 +35,9 @@ namespace Redback_Report_Generator
             cornerRadius = new XSize(40, 40);
             backgroundBrush = new XSolidBrush(XColor.FromKnownColor(XKnownColor.Gray));
 
+            arialLarge = new XFont("arial" ,20);
+            arialSmall = new XFont("arial", 12);
+            arialSmallBold = new XFont("arial", 12, XFontStyle.Bold);
         }
 
         public virtual void DrawHeader(XGraphics gfx, string reportName, int score)
@@ -77,10 +83,10 @@ namespace Redback_Report_Generator
 
             //needs to be variable
             gfx.DrawString(reportName + " : ", new XFont("Arial", 10),
-                XBrushes.White, scoreRect.X + 10, scoreRect.Y + 35);
+                XBrushes.Black, scoreRect.X + 10, scoreRect.Y + 35);
 
             gfx.DrawString(score+ "%", new XFont("Arial", 10),
-                XBrushes.White, innerRectScore.X + 5, innerRectScore.Y + 25);
+                XBrushes.Black, innerRectScore.X + 5, innerRectScore.Y + 25);
         }
     }
 }

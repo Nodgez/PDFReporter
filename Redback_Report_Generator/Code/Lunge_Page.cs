@@ -11,7 +11,7 @@ namespace Redback_Report_Generator
 {
     class Lunge_Page : Report_Page
     {
-        public Lunge_Page(PdfPage page, ProfileInfo profleInfo, List<Parameter> userParameters) : base(page, profleInfo, userParameters)
+        public Lunge_Page(PdfPage page, ProfileInfo profleInfo, List<Parameter> userParameters, int dataStart = 0) : base(page, profleInfo, userParameters, dataStart)
         { }
 
         public void DrawStats(XGraphics gfx)
@@ -35,8 +35,8 @@ namespace Redback_Report_Generator
 
             for (int i = 0; i < 4; i++)
             {
-                Parameter param1 = userParameters_.ElementAt(i);
-                Parameter param2 = userParameters_.ElementAt(i + 4);
+                Parameter param1 = userParameters_.ElementAt(dataReadStart + i);
+                Parameter param2 = userParameters_.ElementAt(dataReadStart + i + 4);
                 char degree = Convert.ToChar('\u00b0');
                 XBrush leftParamCol = XBrushes.Green;
                 XBrush rightParamCol = XBrushes.Green;
@@ -44,20 +44,16 @@ namespace Redback_Report_Generator
                 double y = (i * page_.Height * 0.15f) + page_.Height * 0.35;
                 gfx.DrawString(param1.Name, small, XBrushes.Black, new XPoint(center.X - page_.Width * 0.25, y), XStringFormats.Center);
 
-                if (param1.Color == "Amber")
-                    leftParamCol = new XSolidBrush(XColor.FromArgb(199, 171, 14));
-                else if (param1.Color == "Red")
-                    leftParamCol = XBrushes.Red;
+                leftParamCol = DrawingUtil.Instance.ChooseBrushColor(param1.Color);
                 XRect infoRect = new XRect(center.X - page_.Width * 0.25 - 25, y + 20, 50, 35);
+                DrawingUtil.DrawOutlineRect(infoRect, gfx, new XSize(10, 10));
                 gfx.DrawRoundedRectangle(leftParamCol, infoRect, new XSize(10, 10));
                 gfx.DrawString(param1.Value.ToString() + degree, small, XBrushes.Black, new XPoint(infoRect.X + 25, infoRect.Y + 17.5), XStringFormats.Center);
 
                 gfx.DrawString(param2.Name, small, XBrushes.Black, new XPoint(center.X + page_.Width * 0.25, y), XStringFormats.Center);
-                if (param2.Color == "Amber")
-                    rightParamCol = new XSolidBrush(XColor.FromArgb(199, 171, 14));
-                else if (param2.Color == "Red")
-                    rightParamCol = XBrushes.Red;
+                rightParamCol = DrawingUtil.Instance.ChooseBrushColor(param2.Color);
                 infoRect = new XRect(center.X + page_.Width * 0.25 - 25, y + 20, 50, 35);
+                DrawingUtil.DrawOutlineRect(infoRect, gfx, new XSize(10, 10));
                 gfx.DrawRoundedRectangle(rightParamCol, infoRect, new XSize(10, 10));
                 gfx.DrawString(param2.Value.ToString() + degree, small, XBrushes.Black, new XPoint(infoRect.X + 25, infoRect.Y + 17.5), XStringFormats.Center);
 
